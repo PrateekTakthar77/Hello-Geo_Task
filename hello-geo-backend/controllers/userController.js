@@ -44,13 +44,12 @@ exports.getUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) {
-            res.status(404);
-            throw new Error('User not found');
+            res.status(404).json({ title: "Not Found", message: "User not found" });
+            return; 
         }
         res.json(user);
     } catch (error) {
-        res.status(500);
-        next(error);
+        res.status(500).json({ title: "Server Error", message: error.message });
     }
 };
 
